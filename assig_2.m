@@ -29,17 +29,31 @@ for i=11:15
     end
 end
 
-% Detect outliers 
-outlierCounts = isoutlier(X);
+% Replace outliers of continous types columns with the nearest non-outlier
+X(:,1) = filloutliers(X(:,1), 'nearest');
+X(:, 3:20) = filloutliers(X(:, 3:20), 'nearest');
+X(:, 26:32) = filloutliers(X(:, 26:32), 'nearest');
+X(:, 39:44) = filloutliers(X(:, 39:44), 'nearest');
+X(:, 51:56) = filloutliers(X(:, 51:56), 'nearest');
+X(:, 63:68) = filloutliers(X(:, 63:68), 'nearest');
+X(:, 75:80) = filloutliers(X(:, 75:80), 'nearest');
+X(:, 87:92) = filloutliers(X(:, 87:92), 'nearest');
+X(:, 99:104) = filloutliers(X(:, 99:104), 'nearest');
+X(:, 111:116) = filloutliers(X(:, 111:116), 'nearest');
+X(:, 123:128) = filloutliers(X(:, 123:128), 'nearest');
+X(:, 135:140) = filloutliers(X(:, 135:140), 'nearest');
+X(:, 147:152) = filloutliers(X(:, 147:152), 'nearest');
+X(:, 159:278) = filloutliers(X(:, 159:278), 'nearest');
 
 % Normalize features
 X = normalize(X, 'range');
 
+% Display Before and After the first 10 columns
 figure(1);
 subplot(1,2,1);
 boxchart(X_before(:, 1:10));
-title('Before Normalization');
+title('Before Cleaning');
 
 subplot(1,2,2);
 boxchart(X(:, 1:10));
-title('After Normalization');
+title('After Cleaning');
