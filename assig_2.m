@@ -1,35 +1,45 @@
-clear;
 clc;
+clear;
 
 load("arrhythmia.mat");
 
-function showWaves = showChannelsWaves(X)
-    channelFirstIndex = [16 28 40 52 64 76 88 100 112 124 136 148];
-    titles = ['DI' 'DII' 'DII' 'AVR' 'AVL' 'AVF' 'V1' 'V2' 'V3' 'V4' 'V5' 'V6'];
+X_before = X;
 
-    for i=1:length(channelFirstIndex)
-        
-        figure(2+floor(i./7));
-        if mod(i,6) == 0
-            subplot(3,2,6);
-        else
-            subplot(3,2,mod(i,6));
-        end
+% Number of missing values per column
+missingCounts = sum(isnan(X), 1);  
 
-        j=channelFirstIndex(1,i);
+% Display the number of columns with missing values
+colsWithMissing = find(missingCounts > 0);
 
-        boxchart(X(:,j:j+4));
-        title(string(titles(1,i)));
-        xlabel('Waves');
-        ylabel('Average width (msec)');
+for i = 1:length(colsWithMissing)
+    j = colsWithMissing(i);
+    fprintf('Column %d has %d missing values.\n', j, missingCounts(j));
+end
+
+% Handle missing values
+
+% Remove column 14
+X(:,14) = [];
+
+% Use mean imputation for col 11, col 12, col 13 and col 15
+for i=11:15
+    col = X(:,i);
+    if any(isnan(col))
+        X(:,i) = fillmissing(col, 'constant', mean(col(~isnan(col))));
     end
 end
 
+% Detect outliers 
+outlierCounts = isoutlier(X);
 
-% Age boxchart plot
+% Normalize features
+X = normalize(X, 'range');
 
 figure(1);
-boxchart(X(:, 1));
-ylabel('Age (y)');
+subplot(1,2,1);
+boxchart(X_before(:, 1:10));
+title('Before Normalization');
 
-showChannelsWaves(X);
+subplot(1,2,2);
+boxchart(X(:, 1:10));
+title('After Normalization');
