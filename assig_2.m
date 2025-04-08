@@ -38,7 +38,7 @@ outliers_before = isoutlier(X_before(:,cols));
 outliers_before_count = sum(outliers_before, 1);
 
 
-X(:, cols) = filloutliers(X(:,cols), "nearest", "mean");
+X(:, cols) = filloutliers(X(:,cols), "linear", "mean");
 
 % Normalize features
 X = normalize(X, 'range');
