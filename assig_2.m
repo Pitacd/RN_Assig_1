@@ -31,7 +31,14 @@ end
 
 % Replace outliers of continous types columns with the nearest non-outlier
 cols = [1, 3:20, 27:32, 39:44, 51:56, 63:68, 75:80, 87:92, 99:104, 111:116, 123:128, 135:140, 147:152, 159:278];
-X(:, cols) = filloutliers(X(:,cols), "nearest", "mean");
+
+% --- Outliers Before ---
+
+outliers_before = isoutlier(X_before(:,cols));
+outliers_before_count = sum(outliers_before, 1);
+
+
+X(:, cols) = filloutliers(X(:,cols), "linear", "mean");
 
 % Normalize features
 X = normalize(X, 'range');
@@ -45,3 +52,24 @@ title('Before Cleaning');
 subplot(1,2,2);
 boxchart(X(:, 1:10));
 title('After Cleaning');
+
+% --- Outliers After ---
+
+outliers_after = isoutlier(X(:,cols));
+outliers_after_count = sum(outliers_after, 1);
+
+% Create a table to compare the outliers
+outlierTable = table(cols', outliers_before_count', outliers_after_count', ...
+    'VariableNames', {'Column', 'Outliers_Before', 'Outliers_After'});
+
+% Display table to compare the outliers
+figure(2);
+uitable('Data', outlierTable{:,:}, ...
+    'ColumnName', outlierTable.Properties.VariableNames, ...
+    'RowName', [], ...
+    'Units', 'normalized', ...
+    'Position', [0 0 1 1]);
+
+% Display the total of outliers before and after 
+disp(sum(outliers_before_count));
+disp(sum(outliers_after_count));
