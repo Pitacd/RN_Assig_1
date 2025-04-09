@@ -18,8 +18,8 @@ end
 cols = [1, 3:20, 27:32, 39:44, 51:56, 63:68, 75:80, 87:92, 99:104, 111:116, 123:128, 135:140, 147:152, 159:278];
 X(:, cols) = filloutliers(X(:,cols), "linear", "mean");
 
-% Normalize features
-X = normalize(X, 'range');
+% Re-scale features
+X = rescale(X, -1, 1);
 
 % Apply z-score normalization
 X_before=X;

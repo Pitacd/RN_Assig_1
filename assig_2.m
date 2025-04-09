@@ -37,11 +37,10 @@ cols = [1, 3:20, 27:32, 39:44, 51:56, 63:68, 75:80, 87:92, 99:104, 111:116, 123:
 outliers_before = isoutlier(X_before(:,cols));
 outliers_before_count = sum(outliers_before, 1);
 
-
 X(:, cols) = filloutliers(X(:,cols), "linear", "mean");
 
-% Normalize features
-X = normalize(X, 'range');
+% Re-scale features
+X = rescale(X, -1, 1);
 
 % Display Before and After the first 10 columns
 figure(1);
