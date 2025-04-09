@@ -50,3 +50,21 @@ X(:, [18,19,63,65,78,107,122,123,129,131,133,135,140,146,151,249]) = [];
 VarNames(:,[18,19,63,65,78,107,122,123,129,131,133,135,140,146,151,249]) = [];
 
 % --------//-----------
+
+[coeff,score,latent,tsquared,explained,mu] = pca(X);
+
+% Cumulative variance explained by each principal component
+cumulativeVariance = cumsum(explained);
+
+% Plot the cumulative variance
+figure(1);
+plot(1:length(cumulativeVariance), cumulativeVariance, '-o', 'LineWidth', 2);
+title('Cumulative Variance Explained by Principal Components');
+xlabel('Number of Principal Components');
+ylabel('Cumulative Variance Explained (%)');
+grid on;
+
+% Specify number of components explaining at least 90% of variance
+threshold = 90;
+numComponents = find(cumulativeVariance >= threshold, 1);
+fprintf('Number of components chosen: %d\n', numComponents);
