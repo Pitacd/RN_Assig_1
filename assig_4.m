@@ -22,7 +22,7 @@ X(:, cols) = filloutliers(X(:,cols), "linear", "mean");
 
 % Before transformation
 for i=1:20
-    figure(2);
+    figure(1);
     subplot(4,5,i);
     histogram(X(:, i));
     title(VarNames(i));
@@ -38,7 +38,7 @@ X = rescale(X, 0 , 1);
 
 % After transformation
 for i=1:20
-    figure(1);
+    figure(2);
     subplot(4,5,i);
     histogram(X(:, i));
     title(VarNames(i));
