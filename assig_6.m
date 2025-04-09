@@ -68,3 +68,5 @@ grid on;
 threshold = 90;
 numComponents = find(cumulativeVariance >= threshold, 1);
 fprintf('Number of components chosen: %d\n', numComponents);
+
+X_reduced = score(:, 1:numComponents);
