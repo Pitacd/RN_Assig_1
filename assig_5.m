@@ -5,7 +5,7 @@ load ("arrhythmia.mat");
 
 % --------//-----------
 
-% Do Task 2
+% Do Task 2 and 4
 
 % Remove column 14
 X(:,14) = [];
