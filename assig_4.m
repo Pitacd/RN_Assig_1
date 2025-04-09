@@ -30,7 +30,10 @@ for i=1:20
     xlabel(VarNames(i));
 end
 
+% Apply zscore normalization
 X= zscore(X);
+
+% Re-scale features
 X = rescale(X, 0 , 1);
 
 % After transformation

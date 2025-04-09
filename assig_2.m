@@ -40,7 +40,7 @@ outliers_before_count = sum(outliers_before, 1);
 X(:, cols) = filloutliers(X(:,cols), "linear", "mean");
 
 % Re-scale features
-X = rescale(X, -1, 1);
+X = rescale(X, 0, 1);
 
 % Display Before and After the first 10 columns
 figure(1);
