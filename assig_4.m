@@ -18,19 +18,27 @@ end
 cols = [1, 3:20, 27:32, 39:44, 51:56, 63:68, 75:80, 87:92, 99:104, 111:116, 123:128, 135:140, 147:152, 159:278];
 X(:, cols) = filloutliers(X(:,cols), "linear", "mean");
 
-% Re-scale features
-X = rescale(X, -1, 1);
+% Apply transformation
 
-% Apply z-score normalization
-X_before=X;
-[X, mu, sigma] = zscore(X);
+% Before transformation
+for i=1:20
+    figure(2);
+    subplot(4,5,i);
+    histogram(X(:, i));
+    title(VarNames(i));
+    ylabel('Frequency');
+    xlabel(VarNames(i));
+end
 
-% Show before and after z-score normaloization
-figure(1);
-subplot(1,2,1);
-boxchart(X_before(:, 1:10));
-title('Before z-score');
+X= zscore(X);
+X = rescale(X, 0 , 1);
 
-subplot(1,2,2);
-boxchart(X(:, 1:10));
-title('After z-score');
+% After transformation
+for i=1:20
+    figure(1);
+    subplot(4,5,i);
+    histogram(X(:, i));
+    title(VarNames(i));
+    ylabel('Frequency');
+    xlabel(VarNames(i));
+end
