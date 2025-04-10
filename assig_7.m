@@ -39,6 +39,8 @@ VarNames(:,190) = [];
 X(:, [18,19,63,65,78,107,122,123,129,131,133,135,140,146,151,249]) = [];
 VarNames(:,[18,19,63,65,78,107,122,123,129,131,133,135,140,146,151,249]) = [];
 
+% Create New Features
+
 nova_feature = X(:,4) ./ ((X(:,3) / 100).^2);
 X = [nova_feature X];
 VarNames = ['IMC' VarNames];
@@ -47,7 +49,6 @@ nova_feature = X(:,15) ./ (220 - X(:,2));
 X = [nova_feature X];
 VarNames = ['maxHeartR/HeartR' VarNames];
 
-%%
 % Display histograms
 
 figure(1);
