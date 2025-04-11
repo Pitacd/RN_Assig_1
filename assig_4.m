@@ -18,8 +18,6 @@ end
 cols = [1, 3:20, 27:32, 39:44, 51:56, 63:68, 75:80, 87:92, 99:104, 111:116, 123:128, 135:140, 147:152, 159:278];
 X(:, cols) = filloutliers(X(:,cols), "linear", "mean");
 
-% Apply transformation
-
 % Before transformation
 for i=1:20
     figure(1);
@@ -30,11 +28,13 @@ for i=1:20
     xlabel(VarNames(i));
 end
 
+% Apply transformation
+
 % Apply zscore normalization
-X= zscore(X);
+X(:, cols) = zscore(X(:, cols));
 
 % Re-scale features
-X = rescale(X, 0 , 1);
+X(:, cols) = rescale(X(:, cols), 0 , 1);
 
 % After transformation
 for i=1:20

@@ -31,30 +31,39 @@ X_new_features = X;
 % --------//-----------
 
 % Apply zscore normalization
-X_transformed = zscore(X_transformed);
+X_transformed(:, cols) = zscore(X_transformed(:, cols));
 
 % Re-scale features
-X_transformed = rescale(X_transformed, 0 , 1);
+X_transformed(:, cols) = rescale(X_transformed(:, cols), 0 , 1);
 
-% Remove columns related to S' wave except 1
-X_transformed(:, [31:12:151 , 164:10:274] ) = [];
+% Remove columns related to S' wave except 1 and V1 and V3 S' amplitude 
+X_transformed(:, [31:12:151 , 164:10:214 234 254:10:274] ) = [];
+VarNames(:, [31:12:151 , 164:10:214 234 254:10:274] ) = [];
 
 % Remove column of DI Q wave amplitude (amplitude same corr as width)
 X_transformed(:, 149 ) = [];
+VarNames(:,149) = [];
 
 % Remove column of AVL QRSA (AVL same corr as DIII QRSA)
 X_transformed(:, 190 ) = [];
+VarNames(:,190) = [];
 
-% Join all the columns of figure 4 cause they are correlated
-X_transformed(:, [18,19,63,65,78,107,122,123,129,131,133,135,140,146,151,249]) = [];
+% Join all the columns of figure 4 cause they are correlated except 1
+X_transformed(:, [19,63,107,129,140,151,251]) = [];
+VarNames(:,[19,63,107,129,140,151,251]) = [];
 
-% Apply zscore normalization
-X_transformed = zscore(X_transformed);
+% Verify for columns with 0 varience
 
-% Re-scale features
-X_transformed = rescale(X_transformed, 0 , 1);
+varX = var(X_transformed, 0, 1); % check the varience of the features
+zeroVarCols = find(varX == 0);
+
+% Remove the features with 0 varience
+X_transformed(:, zeroVarCols) = [];
+VarNames(zeroVarCols) = [];
 
 % --------//-----------
+
+% TODO: change this after
 
 % Create New Features
 

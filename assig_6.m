@@ -24,18 +24,18 @@ cols = [1, 3:20, 27:32, 39:44, 51:56, 63:68, 75:80, 87:92, 99:104, 111:116, 123:
 X(:, cols) = filloutliers(X(:,cols), "linear", "mean");
 
 % Apply zscore normalization
-X= zscore(X);
+X(:, cols) = zscore(X(:, cols));
 
 % Re-scale features
-X = rescale(X, 0 , 1);
+X(:, cols) = rescale(X(:, cols), 0 , 1);
 
 % --------//-----------
 
 % Do Task 5
 
-% Remove columns related to S' wave except 1
-X(:, [31:12:151 , 164:10:274] ) = [];
-VarNames(:, [31:12:151 , 164:10:274] ) = [];
+% Remove columns related to S' wave except 1 and V1 and V3 S' amplitude 
+X(:, [31:12:151 , 164:10:214 234 254:10:274] ) = [];
+VarNames(:, [31:12:151 , 164:10:214 234 254:10:274] ) = [];
 
 % Remove column of DI Q wave amplitude (amplitude same corr as width)
 X(:, 149 ) = [];
@@ -45,9 +45,18 @@ VarNames(:,149) = [];
 X(:, 190 ) = [];
 VarNames(:,190) = [];
 
-% Join all the columns of figure 4 cause they are correlated
-X(:, [18,19,63,65,78,107,122,123,129,131,133,135,140,146,151,249]) = [];
-VarNames(:,[18,19,63,65,78,107,122,123,129,131,133,135,140,146,151,249]) = [];
+% Join all the columns of figure 4 cause they are correlated except 1
+X(:, [19,63,107,129,140,151,251]) = [];
+VarNames(:,[19,63,107,129,140,151,251]) = [];
+
+% Verify for columns with 0 varience
+
+varX = var(X, 0, 1); % check the varience of the features
+zeroVarCols = find(varX == 0);
+
+% Remove the features with 0 varience
+X(:, zeroVarCols) = [];
+VarNames(zeroVarCols) = [];
 
 % --------//-----------
 

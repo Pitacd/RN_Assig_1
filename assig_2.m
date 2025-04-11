@@ -29,18 +29,17 @@ for i=11:15
     end
 end
 
-% Replace outliers of continous types columns with the nearest non-outlier
 cols = [1, 3:20, 27:32, 39:44, 51:56, 63:68, 75:80, 87:92, 99:104, 111:116, 123:128, 135:140, 147:152, 159:278];
 
-% --- Outliers Before ---
-
+% --- Number of Outliers Before ---
 outliers_before = isoutlier(X_before(:,cols));
 outliers_before_count = sum(outliers_before, 1);
 
+% Replace outliers of continous types columns with the nearest non-outlier
 X(:, cols) = filloutliers(X(:,cols), "linear", "mean");
 
 % Re-scale features
-X = rescale(X, 0, 1);
+X(:, cols) = rescale(X(:, cols), 0, 1);
 
 % Display Before and After the first 10 columns
 figure(1);
@@ -52,8 +51,7 @@ subplot(1,2,2);
 boxchart(X(:, 1:10));
 title('After Cleaning');
 
-% --- Outliers After ---
-
+% --- Number of Outliers After ---
 outliers_after = isoutlier(X(:,cols));
 outliers_after_count = sum(outliers_after, 1);
 
