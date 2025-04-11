@@ -23,6 +23,9 @@ end
 cols = [1, 3:20, 27:32, 39:44, 51:56, 63:68, 75:80, 87:92, 99:104, 111:116, 123:128, 135:140, 147:152, 159:278];
 X(:, cols) = filloutliers(X(:,cols), "linear", "mean");
 
+
+% --------//-----------
+
 % Create New Features
 
 % Feature 1: IMC
@@ -64,6 +67,9 @@ for i = 1:length(VarNames)
     clear nomeValido;
 end
 
+
+% Create QRS width for each channnel
+
 chanDI_QRSdur = X(:,S.DIQWaveWidth) + X(:,S.DIRWaveWidth) + X(:,S.DISWaveWidth);
 chanDII_QRSdur = X(:,S.DIIQWaveWidth) + X(:,S.DIIRWaveWidth) + X(:,S.DIISWaveWidth);
 chanDIII_QRSdur = X(:,S.DIIIQWaveWidth) + X(:,S.DIIIRWaveWidth) + X(:,S.DIIISWaveWidth);
@@ -89,36 +95,124 @@ clear chanDI_QRSdur chanDII_QRSdur chanDIII_QRSdur chanAVR_QRSdur chanAVL_QRSdur
 
 figure(1);
 subplot(2,2,1);
-histogram(X(:, 3));
+histogram(X(:, 15));
 ylabel('Frequency');
 xlabel('Age (y)');
 
 figure(1);
 subplot(2,2,2);
-histogram(X(:, 16));
+histogram(X(:, 28));
 ylabel('Frequency');
 xlabel('Heart rate (bpm)');
 
 figure(1);
 subplot(2,2,3:4);
-histogram(X(:, 1));
+histogram(X(:, 13));
 ylabel('Frequency');
 xlabel('Heart Rate Level');
 
 figure(2);
 subplot(2,2,1);
-histogram(X(:, 5));
+histogram(X(:, 17));
 ylabel('Frequency');
 xlabel('Height (cm)');
 
 figure(2);
 subplot(2,2,2);
-histogram(X(:, 6));
+histogram(X(:, 18));
 ylabel('Frequency');
-xlabel('Weigth (Kg)');
+xlabel('Weigth (kg)');
 
 figure(2);
 subplot(2,2,3:4);
-histogram(X(:, 2));
+histogram(X(:, 14));
 ylabel('Frequency');
 xlabel('IMC');
+
+% Display correlation heatmap
+
+figure(3)
+R = corr(X(:,14), X(:, 17:18));
+subplot(2,1,1);
+heatmap({"Height (cm)", "Weight (kg)"},{"IMC"},R);
+
+figure(3)
+R = corr(X(:, 13), X(:, [15 28]));
+subplot(2,1,2);
+heatmap({"Age (y)", "Heart rate (bpm)"},{"Heart Rate Level"},R);
+
+% QRS from DI to AVF
+
+figure(4);
+R = corr(X(:, 1), X(:, 29:31));
+subplot(3,2,1);
+heatmap({"Q", "R", "S"},{"QRS"},R);
+title('DI waves width');
+
+figure(4);
+R = corr(X(:, 2), X(:, 41:43));
+subplot(3,2,2);
+heatmap({"Q", "R", "S"},{"QRS"},R);
+title('DII waves width');
+
+figure(4);
+R = corr(X(:, 3), X(:, 53:55));
+subplot(3,2,3);
+heatmap({"Q", "R", "S"},{"QRS"},R);
+title('DIII waves width');
+
+figure(4);
+R = corr(X(:, 4), X(:, 65:67));
+subplot(3,2,4);
+heatmap({"Q", "R", "S"},{"QRS"},R);
+title('AVR waves width');
+
+figure(4);
+R = corr(X(:, 5), X(:, 77:79));
+subplot(3,2,5);
+heatmap({"Q", "R", "S"},{"QRS"},R);
+title('AVL waves width');
+
+figure(4);
+R = corr(X(:, 6), X(:, 89:91));
+subplot(3,2,6);
+heatmap({"Q", "R", "S"},{"QRS"},R);
+title('AVF waves width');
+
+% QRS from V1 to V6
+
+figure(5);
+R = corr(X(:, 7), X(:, 101:103));
+subplot(3,2,1);
+heatmap({"Q", "R", "S"},{"QRS"},R);
+title('V1 waves width');
+
+figure(5);
+R = corr(X(:, 8), X(:, 113:115));
+subplot(3,2,2);
+heatmap({"Q", "R", "S"},{"QRS"},R);
+title('V2 waves width');
+
+figure(5);
+R = corr(X(:, 9), X(:, 125:127));
+subplot(3,2,3);
+heatmap({"Q", "R", "S"},{"QRS"},R);
+title('V3 waves width');
+
+figure(5);
+R = corr(X(:, 10), X(:, 137:139));
+subplot(3,2,4);
+heatmap({"Q", "R", "S"},{"QRS"},R);
+title('V4 waves width');
+
+figure(5);
+R = corr(X(:, 11), X(:, 149:151));
+subplot(3,2,5);
+heatmap({"Q", "R", "S"},{"QRS"},R);
+title('V5 waves width');
+
+figure(5);
+R = corr(X(:, 12), X(:, 161:163));
+subplot(3,2,6);
+heatmap({"Q", "R", "S"},{"QRS"},R);
+title('V6 waves width');

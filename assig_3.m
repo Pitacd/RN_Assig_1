@@ -56,6 +56,26 @@ title('Heart Rate');
 xlabel('Beats (per min)');
 ylabel('Frequency');
 
+% Classes
+figure(5);
+hold on;
+
+% Plot class 1: No arrhythmia
+histogram(Y(Y == 1), 'DisplayName', '1 - No arrhythmia');
+
+% Plot classes 2 to 15: With arrhythmia
+histogram(Y(Y >= 2 & Y <= 15), 'DisplayName', '2-15 - With arrhythmia');
+
+% Plot class 16: Not classified
+histogram(Y(Y == 16), 'DisplayName', '16 - Not classified');
+
+% Add labels and legend
+title('Classes');
+xlabel('Class');
+ylabel('Frequency');
+legend show;
+hold off;
+
 % BOXCHARTS
 
 % Function to display two figures with boxchart graphs of each channel
