@@ -23,6 +23,7 @@ end
 cols = [1, 3:20, 27:32, 39:44, 51:56, 63:68, 75:80, 87:92, 99:104, 111:116, 123:128, 135:140, 147:152, 159:278];
 X(:, cols) = filloutliers(X(:,cols), "linear", "mean");
 
+
 % --------//-----------
 
 % Create New Features
@@ -66,7 +67,9 @@ for i = 1:length(VarNames)
     clear nomeValido;
 end
 
+
 % Create QRS width for each channnel
+
 chanDI_QRSdur = X(:,S.DIQWaveWidth) + X(:,S.DIRWaveWidth) + X(:,S.DISWaveWidth);
 chanDII_QRSdur = X(:,S.DIIQWaveWidth) + X(:,S.DIIRWaveWidth) + X(:,S.DIISWaveWidth);
 chanDIII_QRSdur = X(:,S.DIIIQWaveWidth) + X(:,S.DIIIRWaveWidth) + X(:,S.DIIISWaveWidth);
@@ -79,6 +82,8 @@ chanV3_QRSdur = X(:,S.V3QWaveWidth) + X(:,S.V3RWaveWidth) + X(:,S.V3SWaveWidth);
 chanV4_QRSdur = X(:,S.V4QWaveWidth) + X(:,S.V4RWaveWidth) + X(:,S.V4SWaveWidth);
 chanV5_QRSdur = X(:,S.V5QWaveWidth) + X(:,S.V5RWaveWidth) + X(:,S.V5SWaveWidth);
 chanV6_QRSdur = X(:,S.V6QWaveWidth) + X(:,S.V6RWaveWidth) + X(:,S.V6SWaveWidth);
+
+clear S;
 
 X = [chanDI_QRSdur chanDII_QRSdur chanDIII_QRSdur chanAVR_QRSdur chanAVL_QRSdur chanAVF_QRSdur chanV1_QRSdur chanV2_QRSdur chanV3_QRSdur chanV4_QRSdur chanV5_QRSdur chanV6_QRSdur X];
 VarNames = ['chanDI_QRSdur' 'chanDII_QRSdur' 'chanDIII_QRSdur' 'chanAVR_QRSdur' 'chanAVL_QRSdur' 'chanAVF_QRSdur' 'chanV1_QRSdur' 'chanV2_QRSdur' 'chanV3_QRSdur' 'chanV4_QRSdur' 'chanV5_QRSdur' 'chanV6_QRSdur' VarNames];
