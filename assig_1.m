@@ -11,5 +11,5 @@ size(X)
 size(Y)
 
 % Show output : First 10 rows of the tables X and Y
-X(1:10, :)
-Y(1:10, 1)
+X(1:5, 1:2)
+Y(1:5, 1)
