@@ -53,11 +53,15 @@ figure(1);
 subplot(1,2,1);
 boxchart(X_before(:, 1:10));
 title('Before Cleaning');
+xlabel('Column');
+ylabel('Frequency');
+
 
 subplot(1,2,2);
 boxchart(X(:, 1:10));
 title('After Cleaning');
-
+xlabel('Column');
+ylabel('Frequency');
 
 % Display table to compare the outliers
 figure(2);
