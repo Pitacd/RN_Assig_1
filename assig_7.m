@@ -59,7 +59,7 @@ X = [nova_feature X];
 VarNames = ['maxHeartR/HeartR' VarNames];
 
 
-% Feature 3-14: Heart Rate Level
+% Feature 3-14: QRS width for each channnel
 S = struct();
 for i = 1:length(VarNames)
     nomeValido = matlab.lang.makeValidName(VarNames(i));
