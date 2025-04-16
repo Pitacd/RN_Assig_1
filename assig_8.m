@@ -81,11 +81,13 @@ for i=1:6
     h1 = histogram(X_original(:,i), 'FaceColor', [0 0.4470 0.7410], 'FaceAlpha', 0.4);
     hold on;
     h2 = histogram(X_new_features(:,i+2), 'FaceColor', [0.4660 0.6740 0.1880], 'FaceAlpha', 0.4);
+    hold on;
+    h3 = histogram(X_transformed(:,i), 'FaceColor', [0.8500 0.3250 0.0980], 'FaceAlpha', 0.4);
     ylabel('Frequency');
     xlabel(VarNames(i));
 end
 
-legend([h1 h2], {'Original (Blue)', 'New Features (Green)'}, 'Location', 'best');
+legend([h1 h2, h3], {'Original (Blue)', 'New Features (Green)', 'Transformed (Red)'}, 'Location', 'best');
 
 figure(2);
 for i=1:6
